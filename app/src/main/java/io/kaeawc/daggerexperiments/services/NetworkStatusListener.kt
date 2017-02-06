@@ -36,12 +36,15 @@ class NetworkStatusListener : BroadcastReceiver() {
         }
 
         // Assume there is no connectivity if we can't determine
+        val previous = networkState.state
         if (connectivity.activeNetworkInfo?.isConnected ?: false) {
             networkState.state = NetworkState.State.Good
         } else {
             networkState.state = NetworkState.State.None
         }
 
-        bus.send(networkState)
+        if (previous != null && previous != networkState.state) {
+            bus.send(networkState)
+        }
     }
 }
