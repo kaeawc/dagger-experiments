@@ -18,6 +18,10 @@ class MainPresenter : MainInteractor.DataChanges {
         interactor.onCreate(component, this)
     }
 
+    fun onDestroy() {
+        interactor.onDestroy()
+    }
+
     fun onClick() {
         actions.displayText("HI!")
     }

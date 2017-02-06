@@ -2,6 +2,7 @@ package io.kaeawc.daggerexperiments.ui
 
 import io.kaeawc.daggerexperiments.NetworkState
 import io.kaeawc.daggerexperiments.RxEventBus
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class MainInteractor {
@@ -10,12 +11,18 @@ class MainInteractor {
 
     lateinit var changes: DataChanges
 
+    lateinit var networkState: Disposable
+
     fun onCreate(component: UiComponent, listener: DataChanges) {
         component.inject(this)
         changes = listener
-        bus.onMainThread(NetworkState::class.java).subscribe {
+        networkState = bus.onMainThread(NetworkState::class.java).subscribe {
             changes.onNetworkChanged(it.state.toString())
         }
+    }
+
+    fun onDestroy() {
+        if (!networkState.isDisposed) networkState.dispose()
     }
 
     interface DataChanges {

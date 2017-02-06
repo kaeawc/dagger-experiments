@@ -30,6 +30,11 @@ class MainActivity : Activity(), MainPresenter.MainViewActions {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     override fun displayText(value: String) {
         textView.text = value
     }
