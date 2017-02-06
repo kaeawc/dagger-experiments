@@ -1,5 +1,12 @@
 package io.kaeawc.daggerexperiments.services
 
-class ServiceModule {
+import dagger.Module
+import dagger.Provides
 
+@Module
+abstract class ServiceModule {
+
+    @ServiceScope
+    @Provides
+    fun provideServiceInteractor(): ServiceInteractor = ServiceInteractor()
 }

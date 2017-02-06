@@ -7,10 +7,14 @@ import android.content.res.Resources
 import android.util.DisplayMetrics
 import dagger.Module
 import dagger.Provides
+import io.kaeawc.daggerexperiments.services.ServiceComponent
+import io.kaeawc.daggerexperiments.services.ServiceModule
+import io.kaeawc.daggerexperiments.ui.UiComponent
+import io.kaeawc.daggerexperiments.ui.UiModule
 import javax.inject.Singleton
 
-@Module
-class AppModule(private val app: Application) {
+@Module(subcomponents = arrayOf(ServiceComponent::class, UiComponent::class))
+class AppModule(val app: Application) {
 
     companion object {
         private const val SHARED_PREFS_NAME = "default"
@@ -36,5 +40,21 @@ class AppModule(private val app: Application) {
     @Singleton
     fun provideSharedPreferences(): SharedPreferences {
         return app.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUi(uiModule: UiModule, builder: UiComponent.Builder): UiComponent {
+        return builder.uiModule(uiModule).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUiModule() = UiModule()
+
+    @Provides
+    @Singleton
+    fun provideService(serviceModule: ServiceModule, builder: ServiceComponent.Builder): ServiceComponent {
+        return builder.serviceModule(serviceModule).build()
     }
 }

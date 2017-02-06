@@ -21,13 +21,15 @@ android {
     }
 }
 
+// Required for Kotlin to work with Dagger 2
+kapt {
+    generateStubs = true
+}
+
 dependencies {
 
     // Kotlin
     compile deps.kotlin
-
-    // Google Support Libraries
-    compile deps.appCompat
 
     // Dagger 2
     compile deps.dagger

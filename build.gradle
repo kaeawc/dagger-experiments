@@ -30,7 +30,7 @@ String supportLibraryVersion = "25.1.0"
 String leakCanaryVersion = "1.5"
 String rxjavaVersion = "2.0.2"
 String rxandroidVersion = "2.0.1"
-String daggerVersion = "2.5"
+String daggerVersion = "2.9"
 String timberVersion = "4.4.0"
 
 ext.deps = [
