@@ -2,6 +2,7 @@
 <manifest package="io.kaeawc.daggerexperiments"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -25,7 +26,7 @@
             android:name=".services.AutoStart"
             android:enabled="true"
             android:exported="false"
-            android:label="My Service">
+            android:label="Background Syncing">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.LAUNCHER" />

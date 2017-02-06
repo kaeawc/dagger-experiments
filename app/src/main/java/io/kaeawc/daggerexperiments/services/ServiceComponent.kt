@@ -7,7 +7,7 @@ import dagger.Subcomponent
 interface ServiceComponent {
 
     fun inject(backgroundService: BackgroundService)
-//    fun inject(networkStatusListener: NetworkStatusListener)
+    fun inject(networkStatusListener: NetworkStatusListener)
 
     @Subcomponent.Builder
     interface Builder {

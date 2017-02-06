@@ -1,11 +1,21 @@
 package io.kaeawc.daggerexperiments.ui
 
-class MainPresenter {
+import javax.inject.Inject
+
+class MainPresenter : MainInteractor.DataChanges {
+
+    override fun onNetworkChanged(value: String) {
+        actions.displayText("Network is $value")
+    }
+
+    @Inject lateinit var interactor: MainInteractor
 
     lateinit var actions: MainViewActions
 
-    fun onCreate(listener: MainViewActions) {
+    fun onCreate(component: UiComponent, listener: MainViewActions) {
+        component.inject(this)
         actions = listener
+        interactor.onCreate(component, this)
     }
 
     fun onClick() {

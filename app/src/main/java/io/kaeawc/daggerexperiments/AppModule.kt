@@ -75,7 +75,7 @@ class AppModule(val app: Application) {
 
     @Singleton
     @Provides
-    fun provideConnectivityManager(app: App): ConnectivityManager {
+    fun provideConnectivityManager(): ConnectivityManager {
         return app.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 }

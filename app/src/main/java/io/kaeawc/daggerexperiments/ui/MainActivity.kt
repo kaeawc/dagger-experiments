@@ -17,12 +17,13 @@ class MainActivity : Activity(), MainPresenter.MainViewActions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ui()?.inject(this)
+        val ui = getComponent() ?: return finish()
+        ui.inject(this)
 
         textView = findViewById(R.id.hello_world) as TextView
         button = findViewById(R.id.button) as Button
 
-        presenter.onCreate(this)
+        presenter.onCreate(ui, this)
 
         button.setOnClickListener {
             presenter.onClick()

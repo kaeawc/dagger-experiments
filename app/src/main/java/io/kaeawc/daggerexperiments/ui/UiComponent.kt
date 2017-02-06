@@ -8,6 +8,7 @@ interface UiComponent {
 
     fun inject(mainActivity: MainActivity)
     fun inject(mainPresenter: MainPresenter)
+    fun inject(mainInteractor: MainInteractor)
 
     @Subcomponent.Builder
     interface Builder {

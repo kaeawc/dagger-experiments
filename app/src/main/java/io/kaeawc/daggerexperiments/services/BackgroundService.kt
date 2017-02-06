@@ -3,6 +3,7 @@ package io.kaeawc.daggerexperiments.services
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
@@ -37,6 +38,8 @@ class BackgroundService : Service() {
         running = true
 
         (application as App).service.inject(this)
+
+        applicationContext.registerReceiver(NetworkStatusListener(), NetworkStatusListener.getFilter())
 
         bus.onBackgroundThread(NetworkState::class.java).subscribe {
             Log.i("Service", "Network state changed to ${networkState.state}")

@@ -3,7 +3,9 @@ package io.kaeawc.daggerexperiments.services
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.util.Log
 import io.kaeawc.daggerexperiments.App
 import io.kaeawc.daggerexperiments.NetworkState
 import io.kaeawc.daggerexperiments.RxEventBus
@@ -15,8 +17,12 @@ class NetworkStatusListener : BroadcastReceiver() {
     @Inject lateinit var networkState: NetworkState
     @Inject lateinit var connectivity: ConnectivityManager
 
+    var injected: Boolean = false
+
     companion object {
-        const val ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
+        const val ACTION = ConnectivityManager.CONNECTIVITY_ACTION
+
+        fun getFilter() = IntentFilter(ACTION)
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -25,7 +31,9 @@ class NetworkStatusListener : BroadcastReceiver() {
             return
         }
 
-//        (context.applicationContext as App).service.inject(this)
+        if (!injected) {
+            (context.applicationContext as App).service.inject(this)
+        }
 
         // Assume there is no connectivity if we can't determine
         if (connectivity.activeNetworkInfo?.isConnected ?: false) {
