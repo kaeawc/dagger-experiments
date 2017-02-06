@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import io.kaeawc.daggerexperiments.App
 import io.kaeawc.daggerexperiments.NetworkState
 import io.kaeawc.daggerexperiments.RxEventBus
 import javax.inject.Inject
@@ -20,9 +21,11 @@ class NetworkStatusListener : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
-        if(intent == null || intent.action != ACTION) {
+        if(context == null || intent == null || intent.action != ACTION) {
             return
         }
+
+//        (context.applicationContext as App).service.inject(this)
 
         // Assume there is no connectivity if we can't determine
         if (connectivity.activeNetworkInfo?.isConnected ?: false) {

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import io.kaeawc.daggerexperiments.App
 import io.kaeawc.daggerexperiments.NetworkState
 import io.kaeawc.daggerexperiments.RxEventBus
 import javax.inject.Inject
@@ -34,6 +35,8 @@ class BackgroundService : Service() {
 
     fun initialize() {
         running = true
+
+        (application as App).service.inject(this)
 
         bus.onBackgroundThread(NetworkState::class.java).subscribe {
             Log.i("Service", "Network state changed to ${networkState.state}")
