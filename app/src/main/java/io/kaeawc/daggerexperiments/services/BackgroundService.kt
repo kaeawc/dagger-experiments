@@ -14,6 +14,7 @@ class BackgroundService : Service() {
 
     @Inject lateinit var interactor: ServiceInteractor
     @Inject lateinit var bus: RxEventBus
+    @Inject lateinit var networkState: NetworkState
 
     private val binder = LocalBinder()
     private var running = false
@@ -35,7 +36,7 @@ class BackgroundService : Service() {
         running = true
 
         bus.onBackgroundThread(NetworkState::class.java).subscribe {
-
+            Log.i("Service", "Network state changed to ${networkState.state}")
         }
     }
 
