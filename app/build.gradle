@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "io.kaeawc.daggerexperiments"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+
+    // Kotlin
+    compile deps.kotlin
+
+    // Google Support Libraries
+    compile deps.appCompat
+
+    // Dagger 2
+    compile deps.dagger
+    kapt deps.daggerKapt
+    provided deps.daggerJavaXAnnotation
+
+    // Android efficient backport of JSR-310
+    compile deps.threetenabp
+
+    // Memory leak detection
+    debugCompile deps.leakCanaryDebug
+    releaseCompile deps.leakCanaryRelease
+    testCompile deps.leakCanaryRelease
+
+    // Tests
+    testCompile deps.junit
+    testCompile deps.mockitoForKotlin
+    testCompile deps.kotlin
+}
+repositories {
+    mavenCentral()
+}
