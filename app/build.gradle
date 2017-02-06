@@ -36,6 +36,10 @@ dependencies {
     kapt deps.daggerKapt
     provided deps.daggerJavaXAnnotation
 
+    // RxJava & RxAndroid
+    compile deps.rxJava
+    compile deps.rxAndroid
+
     // Android efficient backport of JSR-310
     compile deps.threetenabp
 
