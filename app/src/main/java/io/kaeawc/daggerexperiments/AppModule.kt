@@ -4,14 +4,17 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.net.ConnectivityManager
 import android.util.DisplayMetrics
 import dagger.Module
 import dagger.Provides
-import io.kaeawc.daggerexperiments.services.ServiceComponent
-import io.kaeawc.daggerexperiments.services.ServiceModule
+import io.kaeawc.daggerexperiments.services.*
 import io.kaeawc.daggerexperiments.ui.UiComponent
 import io.kaeawc.daggerexperiments.ui.UiModule
 import javax.inject.Singleton
+import android.net.NetworkInfo
+
+
 
 @Module(subcomponents = arrayOf(ServiceComponent::class, UiComponent::class))
 class AppModule(val app: Application) {
@@ -54,7 +57,25 @@ class AppModule(val app: Application) {
 
     @Provides
     @Singleton
+    fun provideServiceModule() = ServiceModule()
+
+    @Provides
+    @Singleton
     fun provideService(serviceModule: ServiceModule, builder: ServiceComponent.Builder): ServiceComponent {
         return builder.serviceModule(serviceModule).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRxEventBus(): RxEventBus = RxEventBus()
+
+    @Singleton
+    @Provides
+    fun provideNetworkState(): NetworkState = NetworkState()
+
+    @Singleton
+    @Provides
+    fun provideConnectivityManager(app: App): ConnectivityManager {
+        return app.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 }

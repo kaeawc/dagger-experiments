@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-abstract class ServiceModule {
+class ServiceModule {
 
     @ServiceScope
     @Provides

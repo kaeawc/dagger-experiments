@@ -6,11 +6,14 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import io.kaeawc.daggerexperiments.NetworkState
+import io.kaeawc.daggerexperiments.RxEventBus
 import javax.inject.Inject
 
 class BackgroundService : Service() {
 
     @Inject lateinit var interactor: ServiceInteractor
+    @Inject lateinit var bus: RxEventBus
 
     private val binder = LocalBinder()
     private var running = false
@@ -30,10 +33,10 @@ class BackgroundService : Service() {
 
     fun initialize() {
         running = true
-    }
 
-    fun asdf() {
+        bus.onBackgroundThread(NetworkState::class.java).subscribe {
 
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder = binder
